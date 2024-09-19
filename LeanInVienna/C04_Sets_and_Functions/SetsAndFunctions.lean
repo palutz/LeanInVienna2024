@@ -62,6 +62,9 @@ theorem residueClassModFive_empty (residue : ℕ) (h : 5 ≤ residue) :
   simp [residueClassModFive]
   omega
 
+-- s ∪ t
+-- ⋃ (\ + U) indexed union
+-- ∪ (\ + un)  tyoe union
 theorem iUnion_residueClassModFive : ⋃ i, residueClassModFive i = univ := by
   ext x
   simp [residueClassModFive]
@@ -70,8 +73,27 @@ section
 variable {α I : Type} (s : Set α) (A : I → Set α)
 
 example : (s ∪ ⋂ i, A i) = ⋂ i, A i ∪ s := by
-  sorry
-
+  ext x
+  constructor
+  . simp
+    intro h
+    rcases h with (h|h)
+    . intro i
+      right
+      exact h
+    . intro i
+      left
+      specialize h i
+      exact h
+  . simp
+    intro h
+    by_cases hrs: x ∈ s
+    . left
+      exact hrs
+    . right
+      intro  i
+      specialize h  i
+      tauto
 end
 
 #check Classical.choose
