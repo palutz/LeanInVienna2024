@@ -76,7 +76,7 @@ prove one-by-one.
 -/
 /-- my solution --/
 example (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 < a^2 + b^2 := by
-  apply add_pos -- split in 2 goals
+  apply add_pos -- split in 2 goals  (apply go backward reasoning)
   -- first goal
   apply sq_pos_of_pos
   exact ha
@@ -111,12 +111,21 @@ example (a : ℝ) (ha : 0 < a) : 0 < (a^2)^2 := by
 
 
 /- Now prove the same lemma as before using forwards reasoning. -/
-
 example (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 < a^2 + b^2 := by
-  have h2a : 0 < a^2 := by
-    exact sq_pos_of_pos ha
-  have h2b : 0 < b^2 := sq_pos_of_pos hb -- using the condensed spelling
-  exact add_pos h2a h2b
+  -- my solution
+  have a1 : 0 < a^2 := by
+    apply sq_pos_of_pos ha
+    -- exact ha
+  have b1 : 0 < b^2 := by
+    apply sq_pos_of_pos hb
+    -- exact hb
+  exact add_pos a1 b1  -- exact apply the tacting in forward reasoning
+  -- linarith  -- alternative solution
+-- PREV. solution
+ -- have h2a : 0 < a^2 := by
+ --   exact sq_pos_of_pos ha
+ -- have h2b : 0 < b^2 := sq_pos_of_pos hb -- using the condensed spelling
+ -- exact add_pos h2a h2b
 
 
 /- ## Proving implications
@@ -133,9 +142,16 @@ example (a b : ℝ) : a > 0 → b > 0 → a + b > 0 := by
 /- Now prove the following simple statement in propositional logic.
 Note that `p → q → r` means `p → (q → r)`. -/
 example (p q r : Prop) : (p → q) → (p → q → r) → p → r := by
-  intro h1 h2 h3
-  apply h2 h3
-  exact h1 h3
+  intro hpq  -- : p → q, to prove:  (p → q → r) → p → r
+  intro hpqr -- : p → q → r, to prove:   p → r
+  intro hp   -- : p, to prove: r
+  apply hpqr hp
+  apply hpq
+
+
+--  intro h1 h2 h3
+--  apply h2 h3
+--  exact h1 h3
 
 /- # Equivalences
 
