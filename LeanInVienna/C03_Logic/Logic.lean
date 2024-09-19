@@ -97,10 +97,10 @@ of `by` and `exact` and directly put the argument of `exact` after the `:=`.
 -/
 
 example (a : ℝ) (ha : 0 < a) : 0 < (a^2)^2 := by
-  have h2 : 0 < a^2 := by     -- we declare `0 < a^2` as a subgoal
-    apply sq_pos_of_pos  -- we start proving the subgoal
-    exact ha             -- this line is indented, so part of the proof of the subgoal
-  exact sq_pos_of_pos h2 -- we finished the subgoal, and now we prove the main goal using it.
+  have h2 : 0 < a^2 := by     -- We declare `0 < a^2` as a subgoal
+    apply sq_pos_of_pos       -- We start proving the subgoal
+    exact ha                  -- This line is indented, so part of the proof of the subgoal
+  exact sq_pos_of_pos h2      -- We finished the subgoal, and now we prove the main goal using it.
 
 
 /- Now prove the same lemma as before using forwards reasoning. -/
@@ -144,6 +144,8 @@ In the following exercises we will use the lemma:
 
   `sub_nonneg : 0 ≤ y - x ↔ x ≤ y`
 -/
+
+#check sub_nonneg
 
 example {a b c : ℝ} : c + a ≤ c + b ↔ a ≤ b := by
   rw [← sub_nonneg]
@@ -189,8 +191,6 @@ example {a b : ℝ}  (ha : 0 ≤ a) : b ≤ a + b := by
   calc
     b = 0 + b := by ring
     _ ≤ a + b := by exact (add_le_add_iff_right b).2 ha
-
-
 
 /- Let's do a variant using `add_le_add_iff_left a : a + b ≤ a + c ↔ b ≤ c` instead. -/
 
@@ -378,14 +378,13 @@ def non_increasing (f : ℝ → ℝ) := ∀ x₁ x₂, x₁ ≤ x₂ → f x₁ 
 
 /- Let's be very explicit and use forward reasoning first. -/
 example (f g : ℝ → ℝ) (hf : non_decreasing f) (hg : non_decreasing g) :
-    non_decreasing (g ∘ f) := by {
+    non_decreasing (g ∘ f) := by
   -- Let x₁ and x₂ be real numbers such that x₁ ≤ x₂
   intro x₁ x₂ h
   -- Since f is non-decreasing, f x₁ ≤ f x₂.
   have step₁ : f x₁ ≤ f x₂ := hf x₁ x₂ h
   -- Since g is non-decreasing, we then get g (f x₁) ≤ g (f x₂).
   exact hg (f x₁) (f x₂) step₁
-}
 
 /-
 In the above proof, note how inconvenient it is to specify `x₁` and `x₂` in `hf x₁ x₂ h` since
