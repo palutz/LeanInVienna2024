@@ -54,7 +54,7 @@ example (a : ℝ) (ha : 0 < a) : 0 < a^2 := sq_pos_of_pos ha
 /-
 The above proof is a direct proof: we already know `0 < a` and we feed this fact into the
 implication.
-We can also use backward reasoning using the `apply` tactic.
+We can also use *backward reasoning* using the `apply` tactic.
 -/
 
 -- [NOTE]
@@ -74,16 +74,23 @@ Try to do the next exercise using the lemma `add_pos : 0 < x → 0 < y → 0 < x
 Note that after you `apply add_pos` you will have two goals, that you will have to
 prove one-by-one.
 -/
-
+/-- my solution --/
 example (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 < a^2 + b^2 := by
-  apply add_pos
-  -- apply sq_pos_of_pos
-  -- exact ha
-  exact sq_pos_of_pos ha
-  -- apply sq_pos_of_pos
-  -- exact hb
-  exact sq_pos_of_pos hb
-
+  apply add_pos -- split in 2 goals
+  -- first goal
+  apply sq_pos_of_pos
+  exact ha
+  -- second goal
+  apply sq_pos_of_pos
+  exact hb
+--  apply add_pos
+--  apply sq_pos_of_pos
+--  exact ha
+--  -- exact sq_pos_of_pos ha
+--  apply sq_pos_of_pos
+--  exact hb
+--  -- exact sq_pos_of_pos hb
+--
 /-
 You can also give a proof with forward reasoning, using the `have` tactic.
 In order to announce an intermediate statement we use:

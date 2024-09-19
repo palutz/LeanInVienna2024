@@ -10,23 +10,23 @@ example {a b c d : ℕ} (h₁ : a ≤ c) (H₂ : b ≤ d) : a + b ≤ c + d := b
   sorry
 
 example {a b c d : ℕ} (h₁ : a ≤ c) (H₂ : b ≤ d) : a + b + b + b ≤ c + d + d + d := by
-  sorry
+  gcongr
 
 example : cos 0 = 1 := by
   sorry
 
 example {α : Type} (s t : Set α) : s \ (s ∪ t) = ∅ := by
-  sorry
+  aesop
 
 example {α β γ : Type} [TopologicalSpace α] [TopologicalSpace β] [TopologicalSpace γ] {f : α → β}
     {g : β → γ} (hf : Continuous f) (hg : Continuous g) : Continuous (g ∘ f) := by
   sorry
 
 example {x : ℝ} : 0 ≤ x ^ 4 := by
-  sorry
+  positivity
 
 example {a b c d : ℝ} {hab : a < b} {hbc : c < d} : a + c < b + d := by
-  sorry
+  gcongr
 
 -- A broad overview over most basic parts of the library is given in the undergrad list:
 -- https://leanprover-community.github.io/undergrad.html
