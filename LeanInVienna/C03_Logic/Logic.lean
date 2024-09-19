@@ -57,10 +57,17 @@ implication.
 We can also use backward reasoning using the `apply` tactic.
 -/
 
+-- [NOTE]
+-- **apply** -> go backward from the result of a known theorem back to the hypothesis
+-- **exact** - stricter version of apply
+-- use **show_term** to let lean show all the steps
+
 example (a : ℝ) (ha : 0 < a) : 0 < (a^2)^2 := by
   apply sq_pos_of_pos -- Thanks to `sq_pos_of_pos`, it suffices to prove `0 < a^2`
   apply sq_pos_of_pos -- Thanks to `sq_pos_of_pos`, it suffices to prove `0 < a`
   exact ha -- this is exactly our assumption `ha`.
+  -- apply sq_pos_of_pos ha ==> same of 'apply sq_pos_of_pos' with 'exact ha' after
+  -- assumption  => the same of exact ha
 
 /-
 Try to do the next exercise using the lemma `add_pos : 0 < x → 0 < y → 0 < x + y`.
@@ -70,10 +77,12 @@ prove one-by-one.
 
 example (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 0 < a^2 + b^2 := by
   apply add_pos
-  apply sq_pos_of_pos
-  exact ha
-  apply sq_pos_of_pos
-  exact hb
+  -- apply sq_pos_of_pos
+  -- exact ha
+  exact sq_pos_of_pos ha
+  -- apply sq_pos_of_pos
+  -- exact hb
+  exact sq_pos_of_pos hb
 
 /-
 You can also give a proof with forward reasoning, using the `have` tactic.

@@ -108,10 +108,12 @@ itself have? -/
 #check Type 2
 #check Type 3
 
-/- Define a function. -/
+/- Define a function. (with inference of the output)-/
 def f (x : ℕ) := x + 3
+def f' (x : ℕ) : ℕ  := x + 3  /- with explicit type -/
 
 #check f
+#check f'
 
 /- We can express propositions, which are terms of type `Prop`. -/
 
@@ -121,13 +123,15 @@ def FermatLastTheorem :=
   ∀ x y z n : ℕ, n > 2 ∧ x * y * z ≠ 0 → x ^ n + y ^ n ≠ z ^ n
 
 #check FermatLastTheorem
-
+#print FermatLastTheorem
 /-
 Some expressions are terms of type `P` where `P` itself is a term of type `Prop`.
 Such an expression is a proof of the proposition `P`.
 -/
 
 theorem easy : 2 + 2 = 4 := rfl
+theorem easy' : 2 + 2 = 4 := by    /- by activate tactic mode -/
+  rfl
 
 #check easy
 
@@ -287,6 +291,8 @@ For the following lemma, we will rewrite with the lemma
 `exp_add x y` twice, which is a proof that `exp(x+y) = exp(x) * exp(y)`.
 -/
 
+#check exp_add
+
 example (a b c : ℝ) : exp (a + b + c) = exp a * exp b * exp c := by
   rw [exp_add (a + b) c]
   rw [exp_add a b]
@@ -382,7 +388,10 @@ at the tactic state.
 
 example (a b c d : ℝ) (h : c = b*a - d) (h' : d = a*b) : c = 0 := by
   calc
-    c = b*a - d   := by rw [h]
+    -- c = b*a - d   := by rw [h]
+    -- c = b*a - d   := by exact h
+    -- Previous 2 rows are equivalent
+    c = b*a - d   := h
     _ = b*a - a*b := by rw [h']
     _ = 0         := by ring
 
