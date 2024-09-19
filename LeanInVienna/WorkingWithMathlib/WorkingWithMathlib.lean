@@ -37,6 +37,9 @@ example {a b c d : ℝ} {hab : a < b} {hbc : c < d} : a + c < b + d := by
 -- When starting to interact with an area of mathlib, it makes sense to explore the relevant files
 -- in the mathlib docs for a bit: https://leanprover-community.github.io/mathlib4_docs/index.html
 
+-- https://leansearch.net
+#leansearch "finrank of quotient space is diffeence of dimension?"
+
 -- Tools for finding things:
 -- `excact?`, `apply?`, `hint` tactics for making progress on specific goals
 -- Loogle for precise (but possibly broad) searches
