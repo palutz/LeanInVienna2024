@@ -147,8 +147,7 @@ example (p q r : Prop) : (p → q) → (p → q → r) → p → r := by
   intro hp   -- : p, to prove: r
   apply hpqr hp
   apply hpq
-
-
+-- prev. Solution
 --  intro h1 h2 h3
 --  apply h2 h3
 --  exact h1 h3
