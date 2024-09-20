@@ -110,7 +110,7 @@ class Group₂ (α : Type*) where
   one_mul : ∀ x : α, mul one x = x
   inv_mul_cancel : ∀ x : α, mul (inv x) x = one
 
--- use instance when using *class*
+-- use instance when implementing *class*
 instance {α : Type*} : Group₂ (Equiv.Perm α) where
   mul f g := Equiv.trans g f
   one := Equiv.refl α
@@ -122,9 +122,10 @@ instance {α : Type*} : Group₂ (Equiv.Perm α) where
 
 #check Group₂.mul
 
+variable (α β γ : Type*)[Group₂ α]
 infixr:70 " ** " => Group₂.mul
 notation " 1 " => Group₂.one
-
+#check Group₂.mul α β
 
 def mySquare {α : Type*} [Group₂ α] (x : α) :=
   Group₂.mul x x
