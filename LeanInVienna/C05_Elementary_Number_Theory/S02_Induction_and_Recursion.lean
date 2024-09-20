@@ -9,7 +9,7 @@ theorem trivial_induciton (n : ℕ) : 0 < n ^2 + n + 1 := by
     calc
       0 < m ^ 2 + m + 1 := hm
       _ ≤ m ^ 2 + m + 1 + (2 + 2 * m) := by linarith
-      _ < 3 + m * 3 + m ^ 2 := by linarith
+      _ ≤ 3 + m * 3 + m ^ 2 := by linarith
 
 example (n : Nat) : n.succ ≠ Nat.zero :=
   Nat.succ_ne_zero n
