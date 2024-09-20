@@ -29,6 +29,12 @@ variable (f : α ≃ β) (g : β ≃ γ)
 #check (f.symm : β ≃ α)
 #check (f.trans g : α ≃ γ)
 
+variable (x : α)(y: β)(z: γ)
+#check f x
+
+
+-- variable {α : Type*} (f g : Equiv.Perm α )
+
 example (x : α) : (f.trans g).toFun x = g.toFun (f.toFun x) :=
   rfl
 
@@ -94,6 +100,7 @@ example {α : Type*} (f g : Equiv.Perm α) : g.symm.trans (g.trans f) = f :=
 
 end
 
+-- we can use a class instead of a struct
 class Group₂ (α : Type*) where
   mul : α → α → α
   one : α
@@ -103,6 +110,7 @@ class Group₂ (α : Type*) where
   one_mul : ∀ x : α, mul one x = x
   inv_mul_cancel : ∀ x : α, mul (inv x) x = one
 
+-- use instance when using *class*
 instance {α : Type*} : Group₂ (Equiv.Perm α) where
   mul f g := Equiv.trans g f
   one := Equiv.refl α
@@ -113,6 +121,10 @@ instance {α : Type*} : Group₂ (Equiv.Perm α) where
   inv_mul_cancel := Equiv.self_trans_symm
 
 #check Group₂.mul
+
+infixr:70 " ** " => Group₂.mul
+notation " 1 " => Group₂.one
+
 
 def mySquare {α : Type*} [Group₂ α] (x : α) :=
   Group₂.mul x x

@@ -11,7 +11,18 @@ structure Point where
   y : ℝ
   z : ℝ
 
+inductive PointI' where
+  | mk (x y z : ℝ )
+
+
 #check Point.ext
+#check Point
+#check Point.x
+variable (p : Point)
+#check p
+#check p.x
+#check p.y
+
 
 example (a b : Point) (hx : a.x = b.x) (hy : a.y = b.y) (hz : a.z = b.z) : a = b := by
   ext
@@ -23,10 +34,11 @@ def myPoint1 : Point where
   z := 4
 
 def myPoint2 : Point :=
-  ⟨2, -1, 4⟩
-
+  ⟨2, -1, 4⟩     -- anonymous constructor
+-- Equivalent to the prev one
 def myPoint3 :=
   Point.mk 2 (-1) 4
+
 
 structure Point' where build ::
   x : ℝ
@@ -38,7 +50,7 @@ structure Point' where build ::
 namespace Point
 
 def add (a b : Point) : Point :=
-  ⟨a.x + b.x, a.y + b.y, a.z + b.z⟩
+  ⟨a.x + b.x, a.y + b.y, a.z + b.z⟩   -- anon. constructor of Point
 
 def add' (a b : Point) : Point where
   x := a.x + b.x
@@ -55,11 +67,20 @@ end Point
 
 namespace Point
 
+-- Prove commutativity of addition recursively
 protected theorem add_comm (a b : Point) : add a b = add b a := by
   rw [add, add]
   ext <;> dsimp
   repeat' apply add_comm
 
+-- other version(?)
+-- protected theorem add_comm' (a b : Point) : add a b = add b a := by
+--   unfold add
+--   ext <;> dsimp
+--   repeat' apply add_comm'
+
+
+-- quick proof using simp
 example (a b : Point) : add a b = add b a := by simp [add, add_comm]
 
 theorem add_x (a b : Point) : (a.add b).x = a.x + b.x :=
